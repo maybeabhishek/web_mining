@@ -8,19 +8,9 @@ import matplotlib.pyplot as plt
 import itertools
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import SGDClassifier
-from sklearn import linear_model
-from sklearn import neighbors
-from sklearn import metrics
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn import svm
 from sklearn.naive_bayes import GaussianNB
 
-from sklearn.decomposition import TruncatedSVD
-
 import numpy as np
-import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from sklearn import neighbors, datasets
 
@@ -30,8 +20,7 @@ def load_data():
     newsgroups_train = fetch_20newsgroups(subset='train',shuffle=True, remove=('headers', 'footers', 'quotes'))
     newsgroups_test = fetch_20newsgroups(subset='test',shuffle=True, remove=('headers', 'footers', 'quotes'))
 
-    # newsgroups_train = fetch_20newsgroups(subset='train',remove=('headers', 'footers', 'quotes'))
-    # newsgroups_test = fetch_20newsgroups(subset='test',remove=('headers', 'footers', 'quotes'))
+
     class_names = newsgroups_train.target_names
 
     return newsgroups_train, newsgroups_test, class_names
@@ -89,21 +78,6 @@ def Multi_NB(train_bow_tf_idf, train_labels, bow_test_tf_idf, test_labels):
     test_pred = model.predict(bow_test_tf_idf)
     print('Multinomial NB test accuracy = {}'.format((test_pred == test_labels).mean()))
 
-    # # gridsearch for best Hyperparameter
-    # parameters = {'alpha': (1, 0.1, 0.01, 0.015, 0.001)}
-    # gs_clf = GridSearchCV(model, parameters, n_jobs=-1)
-    # gs_clf = gs_clf.fit(train_bow_tf_idf, train_labels)
-    #
-    # best_parameters = gs_clf.best_estimator_.get_params()
-    # print('Best params using gridSearch:')
-    # print(best_parameters)
-    # gstrain_pred = gs_clf.predict(train_bow_tf_idf)
-    # print('New hyperparameters Multinomial NB train accuracy = {}'.format((gstrain_pred == train_labels).mean()))
-    # gstest_pred = gs_clf.predict(bow_test_tf_idf)
-    # print('New hyperparameters Multinomial NB test accuracy = {}'.format((gstest_pred == test_labels).mean()))
-    # print('---------------------------------------')
-    # print()
-
     return model, test_pred
 
 def Guassian_NB(train_bow_tf_idf, train_labels, bow_test_tf_idf, test_labels):
@@ -120,21 +94,6 @@ def Guassian_NB(train_bow_tf_idf, train_labels, bow_test_tf_idf, test_labels):
     print('Gaussian NB train accuracy = {}'.format((train_pred == train_labels).mean()))
     test_pred = model.predict(bow_test_tf_idf)
     print('Gaussian NB test accuracy = {}'.format((test_pred == test_labels).mean()))
-
-    # # gridsearch for best Hyperparameter
-    # parameters = {'alpha': (1, 0.1, 0.01, 0.015, 0.001)}
-    # gs_clf = GridSearchCV(model, parameters, n_jobs=-1)
-    # gs_clf = gs_clf.fit(train_bow_tf_idf, train_labels)
-    #
-    # best_parameters = gs_clf.best_estimator_.get_params()
-    # print('Best params using gridSearch:')
-    # print(best_parameters)
-    # gstrain_pred = gs_clf.predict(train_bow_tf_idf)
-    # print('New hyperparameters Gaussian NB train accuracy = {}'.format((gstrain_pred == train_labels).mean()))
-    # gstest_pred = gs_clf.predict(bow_test_tf_idf)
-    # print('New hyperparameters Gaussian NB test accuracy = {}'.format((gstest_pred == test_labels).mean()))
-    # print('---------------------------------------')
-    # print()
 
     return model
 
@@ -185,20 +144,6 @@ if __name__ == '__main__':
     # Gaussian NB
     # model_MNB = Guassian_NB(train_bow_tf_idf, train_data.target, test_bow_tf_idf, test_data.target)
 
-    # RandomForest
-    # model_RF = randomForest(train_bow_tf_idf, train_data.target, test_bow_tf_idf, test_data.target)
-
-    # SVM Kernel 3rd Degree Polynomial
-    # model_SVM2 = SVM2(train_bow_tf_idf, train_data.target, test_bow_tf_idf, test_data.target)
-
-    # Logistic Regression
-    
-
-    # KNN
-    # model_LR = KNN(train_bow_tf_idf, train_data.target, test_bow_tf_idf, test_data.target, 10)
-
-    # SVM Linear SGD
-    
 
     ### Compute confusion matrix for SVM Linear SGD ###
     cnf_matrix = confusion_matrix(test_data.target, test_pred)
